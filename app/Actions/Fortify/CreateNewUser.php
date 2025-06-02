@@ -5,6 +5,7 @@ namespace App\Actions\Fortify;
 use App\Mail\WelcomeEmail;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -36,23 +37,29 @@ class CreateNewUser implements CreatesNewUsers
     // }
 
     public function create(array $input): User
-{
-    Validator::make($input, [
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'password' => $this->passwordRules(),
-        'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
-    ])->validate();
-
-    $user = User::create([
-        'name' => $input['name'],
-        'email' => $input['email'],
-        'password' => Hash::make($input['password']),
-    ]);
-
-    // Send welcome email
-    Mail::to($user->email)->send(new WelcomeEmail($user));
-
-    return $user;
-}
+    {
+        Validator::make($input, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => $this->passwordRules(),
+            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+        ])->validate();
+    
+        $user = User::create([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => Hash::make($input['password']),
+        ]);
+    
+        // Try to send the welcome email, but ignore any failure
+        try {
+            Mail::to($user->email)->send(new WelcomeEmail($user));
+        } catch (\Exception $e) {
+            // Optionally log the error
+            Log::error('Failed to send welcome email: ' . $e->getMessage());
+        }
+    
+        return $user;
+    }
+    
 }
