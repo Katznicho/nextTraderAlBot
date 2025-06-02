@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BotConfiguration;
+use App\Models\UserSubscriptionPlan;
 use Illuminate\Http\Request;
 
 class BotConfigurationController extends Controller
@@ -37,10 +38,24 @@ class BotConfigurationController extends Controller
         ]);
     }
 
+    // public function configure(Request $request)
+    // {
+    //     return view('bot.configure');
+    // }
+
     public function configure(Request $request)
-    {
-        return view('bot.configure');
+{
+    $userPlan = UserSubscriptionPlan::where('user_id', auth()->id())
+        ->where('status', 'active')
+        ->first();
+
+    if (!$userPlan) {
+        return redirect()->route('subscriptions.index')
+            ->with('error', 'You must have an active subscription to access this feature.');
     }
+
+    return view('bot.configure');
+}
 
     public function connect(Request $request)
     {

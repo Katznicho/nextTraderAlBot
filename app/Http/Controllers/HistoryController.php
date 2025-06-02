@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TradingHistory;
+use App\Models\UserSubscriptionPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,14 +12,23 @@ class HistoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-        $trades = TradingHistory::where('user_id', Auth::id())
-        ->latest('executed_at')
-        ->get();
 
-return view("trading-history.index", compact('trades'));
+
+    public function index(Request $request)
+    {
+        $userPlan = UserSubscriptionPlan::where('user_id', auth()->id())
+            ->where('status', 'active')
+            ->first();
+
+        if (!$userPlan) {
+            return redirect()->route('subscriptions.index')
+                ->with('error', 'You must have an active subscription to access this feature.');
+        }
+        $trades = TradingHistory::where('user_id', Auth::id())
+            ->latest('executed_at')
+            ->get();
+
+        return view("trading-history.index", compact('trades'));
     }
 
     /**

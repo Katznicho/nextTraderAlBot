@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserSubscriptionPlan;
 use App\Services\PaygatePaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,6 +90,14 @@ class AddOnsController extends Controller
      }
     public function index()
     {
+        $userPlan = UserSubscriptionPlan::where('user_id', auth()->id())
+            ->where('status', 'active')
+            ->first();
+
+        if (!$userPlan) {
+            return redirect()->route('subscriptions.index')
+                ->with('error', 'You must have an active subscription to access this feature.');
+        }
         //
         $addons  = $this->addons;
         

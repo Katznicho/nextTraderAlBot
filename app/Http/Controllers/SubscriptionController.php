@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payments;
 use App\Models\SubscriptionPlan;
 use App\Models\UserSubscriptionPlan;
 use App\Services\PaygatePaymentService;
@@ -62,32 +63,70 @@ class SubscriptionController extends Controller
 
     return redirect()->route('subscriptions.index')->with('error', 'Invalid payment option.');
 }
+
+// protected function initiateCryptoPayment(SubscriptionPlan $plan, UserSubscriptionPlan $subscription)
+// {
+//     // Map your plans to their NowPayments invoice links
+//     $cryptoLinks = [
+//         'Basic' => 'https://nowpayments.io/payment/?iid=5863218956',
+//         'Pro'   => 'https://nowpayments.io/payment/?iid=5919588694',
+//     ];
+
+//     $planName = $plan->name;
+
+//     // If a match is found, redirect to the correct crypto invoice
+//     if (isset($cryptoLinks[$planName])) {
+//         return redirect()->away($cryptoLinks[$planName]);
+//     }
+
+//     // If no match found, return with an error
+//     return redirect()->route('subscriptions.index')
+//         ->with('error', 'Crypto payment link not found for this plan.');
+// }
+
 protected function initiateCryptoPayment(SubscriptionPlan $plan, UserSubscriptionPlan $subscription)
 {
-    // Map your plans to their NowPayments invoice links
-    $cryptoLinks = [
+    // Create Payment Record
+    $payment = Payments::create([
+        'user_id' => auth()->id(),
+        'subscription_plan_id' => $plan->id,
+        'payment_reference' => 'crypto_' . uniqid(),
+        'amount' => $plan->price,
+        'status' => 'pending',
+        'payment_method' => 'crypto',
+        'paid_at' => null,
+        'gateway_response' => null,
+    ]);
+
+    // Choose correct NOWPayments link
+    $redirectUrl = match($plan->name) {
         'Basic' => 'https://nowpayments.io/payment/?iid=5863218956',
-        'Pro'   => 'https://nowpayments.io/payment/?iid=5919588694',
-    ];
+        'Pro' => 'https://nowpayments.io/payment/?iid=5919588694',
+        default => route('subscriptions.index'),
+    };
 
-    $planName = $plan->name;
-
-    // If a match is found, redirect to the correct crypto invoice
-    if (isset($cryptoLinks[$planName])) {
-        return redirect()->away($cryptoLinks[$planName]);
-    }
-
-    // If no match found, return with an error
-    return redirect()->route('subscriptions.index')
-        ->with('error', 'Crypto payment link not found for this plan.');
+    return redirect()->away($redirectUrl);
 }
+
 
 protected function initiateCardPayment(SubscriptionPlan $plan, UserSubscriptionPlan $subscription)
 {
-    $payment = new PaygatePaymentService();
+    // Create Payment Record
+    $payment = Payments::create([
+        'user_id' => auth()->id(),
+        'subscription_plan_id' => $plan->id,
+        'payment_reference' => 'card_' . uniqid(),
+        'amount' => $plan->price,
+        'status' => 'pending',
+        'payment_method' => 'card',
+        'paid_at' => null,
+        'gateway_response' => null,
+    ]);
 
-    $paymentUrl = $payment->generatePaymentUrl(
-        orderNumber: $subscription->id,
+    $paygate = new PaygatePaymentService();
+
+    $paymentUrl = $paygate->generatePaymentUrl(
+        orderNumber: $payment->id,
         amount: $plan->price,
         email: auth()->user()->email,
         provider: 'particle',
@@ -96,6 +135,23 @@ protected function initiateCardPayment(SubscriptionPlan $plan, UserSubscriptionP
 
     return redirect()->away($paymentUrl);
 }
+
+
+
+// protected function initiateCardPayment(SubscriptionPlan $plan, UserSubscriptionPlan $subscription)
+// {
+//     $payment = new PaygatePaymentService();
+
+//     $paymentUrl = $payment->generatePaymentUrl(
+//         orderNumber: $subscription->id,
+//         amount: $plan->price,
+//         email: auth()->user()->email,
+//         provider: 'particle',
+//         currency: 'USD'
+//     );
+
+//     return redirect()->away($paymentUrl);
+// }
 }
 
 //https://nowpayments.io/payment/?iid=5863218956

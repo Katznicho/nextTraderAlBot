@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserSubscriptionPlan;
 use Illuminate\Http\Request;
 
 class ChartController extends Controller
@@ -9,9 +10,22 @@ class ChartController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     //
+    //     return view("chart.index");
+    // }
+
+    public function index(Request $request)
     {
-        //
+        $userPlan = UserSubscriptionPlan::where('user_id', auth()->id())
+            ->where('status', 'active')
+            ->first();
+
+        if (!$userPlan) {
+            return redirect()->route('subscriptions.index')
+                ->with('error', 'You must have an active subscription to access this feature.');
+        }
         return view("chart.index");
     }
 

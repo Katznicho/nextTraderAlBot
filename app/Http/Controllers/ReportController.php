@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserSubscriptionPlan;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -12,6 +13,14 @@ class ReportController extends Controller
     public function index()
     {
         //
+        $userPlan = UserSubscriptionPlan::where('user_id', auth()->id())
+            ->where('status', 'active')
+            ->first();
+
+        if (!$userPlan) {
+            return redirect()->route('subscriptions.index')
+                ->with('error', 'You must have an active subscription to access this feature.');
+        }
         return view('reports.index');
     }
 
