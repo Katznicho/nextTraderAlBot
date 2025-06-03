@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserSubscriptionPlan;
 use Illuminate\Http\Request;
 
-class MemberController extends Controller
+class TradeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return view('members.index');
+        $userPlan = UserSubscriptionPlan::where('user_id', auth()->id())
+            ->where('status', 'active')
+            ->first();
+
+        if (!$userPlan) {
+            return redirect()->route('subscriptions.index')
+                ->with('error', 'You must have an active subscription to access this feature.');
+        }
+        return view("trader.index");
     }
 
     /**
@@ -37,7 +45,6 @@ class MemberController extends Controller
     public function show(string $id)
     {
         //
-        return view('members.show');
     }
 
     /**
@@ -46,7 +53,6 @@ class MemberController extends Controller
     public function edit(string $id)
     {
         //
-        return view('members.edit');
     }
 
     /**

@@ -12,6 +12,7 @@ use App\Http\Controllers\SignalController;
 
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SupportController;
+use App\Http\Controllers\TradeController;
 use Illuminate\Support\Facades\Route;
 use Psy\Command\HistoryCommand;
 
@@ -53,6 +54,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource("subscriptions", SubscriptionController::class);
     Route::resource("signals", SignalController::class);
     Route::resource("addons",AddOnsController::class);
+    Route::resource("trades", TradeController::class);
 
     Route::get('/subscriptions/{plan}/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscriptions.subscribe');
     Route::post('/subscriptions/{plan}/process', [SubscriptionController::class, 'process'])->name('subscriptions.process');
@@ -71,6 +73,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     //Robot
 
+    Route::get('/test-mail-view', function () {
+        return view('mail.bot'); // ✅ Will confirm if Laravel can resolve this path
+    });
+    
 
 
 

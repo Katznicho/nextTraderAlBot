@@ -24,6 +24,8 @@ class TradingHistory extends Model
         'status',
         'order_id',
         'executed_at',
+        'date',
+        'lot_size'
     ];
 
     //relationships

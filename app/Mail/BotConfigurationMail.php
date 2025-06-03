@@ -3,24 +3,25 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MemberForgotPassword extends Mailable
+class BotConfigurationMail extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $user;
+    public $botConfig;
 
     /**
      * Create a new message instance.
      */
-    public int $otpCode;
-    public function __construct(int $otpCode)
+    public function __construct($user, $botConfig)
     {
-        //
-        $this->otpCode = $otpCode;
+        $this->user = $user;
+        $this->botConfig = $botConfig;
     }
 
     /**
@@ -29,7 +30,7 @@ class MemberForgotPassword extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Member Forgot Password',
+            subject: 'Your Bot Configuration Is Being Connected',
         );
     }
 
@@ -39,15 +40,17 @@ class MemberForgotPassword extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.member.forgot',
-            with: ['otpCode' => $this->otpCode],
+            markdown: 'mail.bot',
+            with: [
+                'user' => $this->user,
+                'botConfig' => $this->botConfig,
+            ]
         );
     }
+    
 
     /**
      * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
     public function attachments(): array
     {

