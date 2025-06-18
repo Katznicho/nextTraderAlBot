@@ -4,7 +4,7 @@
 @endphp
 
 <x-app-layout>
-    <div class="max-w-7xl mx-auto py-10 px-6">
+    <div class="max-w-7xl mx-auto py-1 px-1">
         <!-- Trading Performance Chart -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
             <div class="flex items-center justify-between mb-4">
@@ -48,7 +48,8 @@
                                     enable_publishing: false,
                                     hide_side_toolbar: !isAdmin,
                                     allow_symbol_change: true,
-                                    hide_volume:!isAdmin,
+                                    // hide_volume:!isAdmin,
+                                    hide_volume:true,
                                     container_id: chartId
                                 });
                             };

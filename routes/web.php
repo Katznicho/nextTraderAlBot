@@ -13,8 +13,10 @@ use App\Http\Controllers\SignalController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\TradeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Psy\Command\HistoryCommand;
+
 
 
 
@@ -38,11 +40,23 @@ Route::get("makePayment",[PaymentController::class,"makePayment"])->name("makePa
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Route for the getting the data feed
-    Route::get('/json-data-feed', [DataFeedController::class, 'getDataFeed'])->name('json_data_feed');
+    // Route::get('/json-data-feed', [DataFeedController::class, 'getDataFeed'])->name('json_data_feed');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
+    Route::impersonate();
+    // Route::middleware(['auth'])->group(function () {
+    //     Route::get('/impersonate/{id}', function ($id) {
+    //         $user = \App\Models\User::findOrFail($id);
+    //         auth()->user()->impersonate($user);
+    //         return redirect('/dashboard');
+    //     })->name('impersonate');
+    
+    //     Route::get('/leave-impersonation', function () {
+    //         auth()->user()->leaveImpersonation();
+    //         return redirect('/users');
+    //     })->name('impersonate.leave');
+    // });
 
     // Robot
     Route::resource('payments', PaymentController::class);
@@ -55,6 +69,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource("signals", SignalController::class);
     Route::resource("addons",AddOnsController::class);
     Route::resource("trades", TradeController::class);
+    Route::resource("users", UserController::class);
+
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+
 
     Route::get('/subscriptions/{plan}/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscriptions.subscribe');
     Route::post('/subscriptions/{plan}/process', [SubscriptionController::class, 'process'])->name('subscriptions.process');
@@ -76,6 +94,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/test-mail-view', function () {
         return view('mail.bot'); // ✅ Will confirm if Laravel can resolve this path
     });
+
+
     
 
 

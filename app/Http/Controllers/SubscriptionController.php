@@ -100,7 +100,7 @@ protected function initiateCryptoPayment(SubscriptionPlan $plan, UserSubscriptio
 
     // Choose correct NOWPayments link
     $redirectUrl = match($plan->name) {
-        'Basic' => 'https://nowpayments.io/payment/?iid=5863218956',
+        'Basic' => 'https://nowpayments.io/payment/?iid=5359072345',
         'Pro' => 'https://nowpayments.io/payment/?iid=5919588694',
         default => route('subscriptions.index'),
     };

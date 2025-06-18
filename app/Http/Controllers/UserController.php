@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,9 +13,28 @@ class UserController extends Controller
     public function index()
     {
         //
-        return view('users.index');
+        #fecth all users
+        $users = User::all();
+        return view('users.index', compact('users'));
 
     }
+
+    public function update(Request $request, User $user)
+{
+    $request->validate([
+        'balance' => 'required|numeric',
+        'profit' => 'required|numeric',
+        'total_trades' => 'required|integer',
+    ]);
+
+    $user->update([
+        'balance' => $request->balance,
+        'profit' => $request->profit,
+        'total_trades' => $request->total_trades,
+    ]);
+
+    return redirect()->route('users.index')->with('success', 'User updated successfully!');
+}
 
     /**
      * Show the form for creating a new resource.
@@ -53,10 +73,10 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    // public function update(Request $request, string $id)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.

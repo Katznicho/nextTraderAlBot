@@ -218,6 +218,24 @@
                         </a>
                     </li>
 
+                    {{-- users --}}
+                    @if (auth()->user()->user_type === 'Admin')
+                    <li
+                    class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['users'])) {{ 'from-[#011478]/[0.12] dark:from-[#011478]/[0.24] to-[#011478]/[0.04]' }} @endif">
+                    <a class="block text-gray-500/90 dark:text-gray-400 hover:text-[#d1111b] transition truncate @if (Route::is('users.*')) {{ '!text-[#011478]' }} @endif"
+                        href="{{ route('users.index') }}">
+                        <div class="flex items-center">
+                            <svg class="shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            <span class="text-sm font-medium ml-3">Users</span>
+                        </div>
+                    </a>
+                </li>
+                    @endif
+                   
                 </ul>
             </div>
         </div>

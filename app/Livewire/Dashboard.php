@@ -27,8 +27,8 @@ class Dashboard extends Component
     {
         $this->balance = Auth::user()->balance;
         $this->lastUpdate = now()->format('H:i:s');
-        $this->profitLoss = 0;
-        $this->totalTrades = 0;
+        $this->profitLoss = Auth::user()->profit;
+        $this->totalTrades = Auth::user()->total_trades;
         $this->chartId = 'tv_' . Str::random(10);
         $this->showFreezeWarning = $this->balance <= 0;
         $this->freezeCountdown = 24 * 60 * 60;
