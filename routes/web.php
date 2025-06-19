@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddOnsController;
 use App\Http\Controllers\BotConfigurationController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\ConnectedBotController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataFeedController;
 use App\Http\Controllers\HistoryController;
@@ -70,6 +71,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource("addons",AddOnsController::class);
     Route::resource("trades", TradeController::class);
     Route::resource("users", UserController::class);
+    Route::resource("connected-bots", ConnectedBotController::class);
+    Route::put('/bots/{bot}', [ConnectedBotController::class, 'update'])->name('bots.update');
+
 
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
 

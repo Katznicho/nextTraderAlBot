@@ -23,6 +23,7 @@ class BotConfiguration extends Model
         'last_connected_at',
         'current_strategy',
         'status_message',
+        'image_url',
     ];
 
     protected $casts = [
