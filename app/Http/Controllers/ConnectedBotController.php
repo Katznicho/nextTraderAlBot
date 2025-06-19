@@ -33,6 +33,20 @@ class ConnectedBotController extends Controller
         return redirect()->route('connected-bots.index')->with('success', 'Bot updated successfully.');
     }
 
+   public function addCredits(Request $request, BotConfiguration $bot)
+{
+    $request->validate([
+        'fuel_balance' => 'required|numeric|min:0.01'
+    ]);
+
+    $bot->fuel_balance += $request->fuel_balance;
+    $bot->last_fueled_at = now(); // Update the last fueled time
+    $bot->save();
+
+    return redirect()->route('connected-bots.index')->with('success', 'Credits added successfully.');
+}
+
+
     /**
      * Show the form for creating a new resource.
      */

@@ -73,6 +73,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource("users", UserController::class);
     Route::resource("connected-bots", ConnectedBotController::class);
     Route::put('/bots/{bot}', [ConnectedBotController::class, 'update'])->name('bots.update');
+    Route::post('/bots/{bot}/add-credits', [ConnectedBotController::class, 'addCredits'])->name('bots.addCredits');
+
 
 
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
