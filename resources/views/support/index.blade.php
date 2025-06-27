@@ -24,7 +24,7 @@
             </div>
 
             <!-- WhatsApp -->
-            <div class="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6">
+            {{-- <div class="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6">
                 <div class="flex items-center">
                     <div class="p-3 bg-[#011478]/10 rounded-full">
                         <svg class="h-6 w-6 text-[#011478]" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
@@ -36,7 +36,7 @@
                         <a href="https://wa.me/256750873575" target="_blank" class="mt-2 text-sm text-[#011478] hover:underline">+256 750 873575</a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- FAQ Section -->
