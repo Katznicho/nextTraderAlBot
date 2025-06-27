@@ -8,9 +8,9 @@
         <!-- Trading Performance Chart -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                {{-- <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                     Market Overview
-                </h3>
+                </h3> --}}
                 <div class="flex gap-2">
                     {{-- @foreach (['1H', '1D', '1W', '1M'] as $interval)
                         <button class="px-3 py-1 text-sm font-medium bg-[#011478]/10 text-[#011478] rounded-lg hover:bg-[#011478]/20 transition">

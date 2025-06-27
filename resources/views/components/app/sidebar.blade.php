@@ -171,20 +171,26 @@
                     </li> --}}
 
                     <!-- Addons -->
-                    <li
-                        class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['addons'])) {{ 'from-[#011478]/[0.12] dark:from-[#011478]/[0.24] to-[#011478]/[0.04]' }} @endif">
-                        <a class="block text-gray-500/90 dark:text-gray-400 hover:text-[#d1111b] transition truncate @if (Route::is('addons.*')) {{ '!text-[#011478]' }} @endif"
-                            href="{{ route('addons.index') }}">
-                            <div class="flex items-center">
-                                <svg class="shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 011-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
-                                </svg>
-                                <span class="text-sm font-medium ml-3">Addons</span>
-                            </div>
-                        </a>
-                    </li>
+                   <li
+    class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['addons'])) {{ 'from-[#011478]/[0.12] dark:from-[#011478]/[0.24] to-[#011478]/[0.04]' }} @endif">
+    <a class="block text-gray-500/90 dark:text-gray-400 hover:text-[#d1111b] transition truncate @if (Route::is('addons.*')) {{ '!text-[#011478]' }} @endif"
+        href="{{ route('addons.index') }}">
+        <div class="flex items-center">
+            <svg class="shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 011-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+            </svg>
+            <span class="text-sm font-medium ml-3 flex items-center gap-2">
+                Addons
+                <span class="bg-green-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+                    New
+                </span>
+            </span>
+        </div>
+    </a>
+</li>
+
 
                     <!-- Reports -->
                     <li
@@ -220,43 +226,43 @@
 
                     {{-- Admin Area --}}
                     {{-- users --}}
-@if (auth()->user()->user_type === 'Admin')
-    <li
-        class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['users'])) {{ 'from-[#011478]/[0.12] dark:from-[#011478]/[0.24] to-[#011478]/[0.04]' }} @endif">
-        <a class="block text-gray-500/90 dark:text-gray-400 hover:text-[#d1111b] transition truncate @if (Route::is('users.*')) {{ '!text-[#011478]' }} @endif"
-            href="{{ route('users.index') }}">
-            <div class="flex items-center">
-                <svg class="shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-                <span class="text-sm font-medium ml-3">Users</span>
-            </div>
-        </a>
-    </li>
+                    @if (auth()->user()->user_type === 'Admin')
+                        <li
+                            class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['users'])) {{ 'from-[#011478]/[0.12] dark:from-[#011478]/[0.24] to-[#011478]/[0.04]' }} @endif">
+                            <a class="block text-gray-500/90 dark:text-gray-400 hover:text-[#d1111b] transition truncate @if (Route::is('users.*')) {{ '!text-[#011478]' }} @endif"
+                                href="{{ route('users.index') }}">
+                                <div class="flex items-center">
+                                    <svg class="shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                    <span class="text-sm font-medium ml-3">Users</span>
+                                </div>
+                            </a>
+                        </li>
 
-    {{-- connected bots --}}
-    <li
-        class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['connected-bots'])) {{ 'from-[#011478]/[0.12] dark:from-[#011478]/[0.24] to-[#011478]/[0.04]' }} @endif">
-        <a class="block text-gray-500/90 dark:text-gray-400 hover:text-[#d1111b] transition truncate @if (Route::is('connected-bots.index')) {{ '!text-[#011478]' }} @endif"
-            href="{{ route('connected-bots.index') }}">
-            <div class="flex items-center">
-                <svg class="shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 17v-2a4 4 0 014-4h1a4 4 0 014 4v2m-4 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
-                </svg>
-                <span class="text-sm font-medium ml-3">Connected Bots</span>
-            </div>
-        </a>
-    </li>
-@endif
+                        {{-- connected bots --}}
+                        <li
+                            class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['connected-bots'])) {{ 'from-[#011478]/[0.12] dark:from-[#011478]/[0.24] to-[#011478]/[0.04]' }} @endif">
+                            <a class="block text-gray-500/90 dark:text-gray-400 hover:text-[#d1111b] transition truncate @if (Route::is('connected-bots.index')) {{ '!text-[#011478]' }} @endif"
+                                href="{{ route('connected-bots.index') }}">
+                                <div class="flex items-center">
+                                    <svg class="shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 17v-2a4 4 0 014-4h1a4 4 0 014 4v2m-4 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                                    </svg>
+                                    <span class="text-sm font-medium ml-3">Connected Bots</span>
+                                </div>
+                            </a>
+                        </li>
+                    @endif
 
                     {{-- Admin Area --}}
 
-                    
-                   
+
+
                 </ul>
             </div>
         </div>
