@@ -7,11 +7,10 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <div class="max-w-7xl mx-auto py-1 px-1">
+    <div class="max-w-7xl mx-auto pt-1 px-4">
         <!-- Trading Performance Chart -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm ">
 
-            <!-- Buy/Sell with Lot Size Section -->
             <!-- Buy/Sell with Lot Size Section -->
             <div x-data="{
                 isAdmin: @json($isAdmin),
@@ -47,41 +46,40 @@
                     setInterval(() => this.changePrices(), 10000);
                 }
             }" x-init="init()"
-                class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 text-white text-sm font-semibold">
-                <!-- SELL -->
-                <div class="flex-1 flex justify-center">
+                class="flex flex-row flex-wrap justify-between items-center gap-2 sm:gap-4 mb-6 text-xs font-medium w-full">
+
+                <!-- BUY Button -->
+                <div class="flex-1 min-w-[100px] max-w-[140px] flex justify-center">
                     <button @click="handleAction"
-                        class="bg-red-600 rounded-md px-6 py-3 shadow w-full max-w-xs text-center">
-                        <p class="text-xs uppercase text-white tracking-wide">Sell</p>
-                        <div class="text-2xl font-bold leading-tight">
-                            <span x-text="sellPrice"></span><sup class="text-xs align-super">9</sup>
-                        </div>
+                        class="border border-blue-500 text-blue-500 hover:bg-blue-50 rounded px-3 py-1 w-full text-center transition leading-tight">
+                        <p class="uppercase text-[10px] tracking-wide">Buy</p>
+                        <div class="text-xs font-normal" x-text="buyPrice"></div>
                     </button>
                 </div>
 
                 <!-- LOT SIZE -->
-                <div class="flex-1 flex justify-center">
+                <div class="flex-1 min-w-[80px] max-w-[120px] flex justify-center">
                     <div
-                        class="bg-white text-gray-800 rounded-md px-3 py-2 shadow flex items-center space-x-6 w-full max-w-xs justify-center">
+                        class="border border-gray-300 text-gray-700 rounded px-3 py-1 flex items-center space-x-3 w-full justify-center">
                         <button @click="decrease"
-                            class="text-xl font-bold text-gray-600 hover:text-black transition">&#x25BC;</button>
-                        <span class="text-2xl font-semibold" x-text="lotSize"></span>
+                            class="text-sm font-semibold text-gray-500 hover:text-black transition">&#x25BC;</button>
+                        <span class="text-sm font-medium" x-text="lotSize"></span>
                         <button @click="increase"
-                            class="text-xl font-bold text-gray-600 hover:text-black transition">&#x25B2;</button>
+                            class="text-sm font-semibold text-gray-500 hover:text-black transition">&#x25B2;</button>
                     </div>
                 </div>
 
-                <!-- BUY -->
-                <div class="flex-1 flex justify-center">
+                <!-- SELL Button -->
+                <div class="flex-1 min-w-[100px] max-w-[140px] flex justify-center">
                     <button @click="handleAction"
-                        class="bg-red-600 rounded-md px-2 py-2 shadow w-full max-w-xs text-center">
-                        <p class="text-xs uppercase text-white tracking-wide">Buy</p>
-                        <div class="text-2xl font-bold leading-tight">
-                            <span x-text="buyPrice"></span><sup class="text-xs align-super">9</sup>
-                        </div>
+                        class="border border-red-500 text-red-500 hover:bg-red-50 rounded px-3 py-1 w-full text-center transition leading-tight">
+                        <p class="uppercase text-[10px] tracking-wide">Sell</p>
+                        <div class="text-xs font-normal" x-text="sellPrice"></div>
                     </button>
                 </div>
             </div>
+           
+            <!-- Buy/Sell with Lot Size Section --> 
 
 
             <!-- TradingView Chart Widget -->

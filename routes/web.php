@@ -5,18 +5,17 @@ use App\Http\Controllers\BotConfigurationController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ConnectedBotController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DataFeedController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SendEmailController;
 use App\Http\Controllers\SignalController;
-
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\TradeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Psy\Command\HistoryCommand;
+
 
 
 
@@ -36,7 +35,7 @@ use Psy\Command\HistoryCommand;
 Route::redirect('/', 'login');
 
 
-Route::get("makePayment",[PaymentController::class,"makePayment"])->name("makePayment");    
+Route::get("makePayment", [PaymentController::class, "makePayment"])->name("makePayment");
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
@@ -52,7 +51,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     //         auth()->user()->impersonate($user);
     //         return redirect('/dashboard');
     //     })->name('impersonate');
-    
+
     //     Route::get('/leave-impersonation', function () {
     //         auth()->user()->leaveImpersonation();
     //         return redirect('/users');
@@ -68,10 +67,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource("reports", ReportController::class);
     Route::resource("subscriptions", SubscriptionController::class);
     Route::resource("signals", SignalController::class);
-    Route::resource("addons",AddOnsController::class);
+    Route::resource("addons", AddOnsController::class);
     Route::resource("trades", TradeController::class);
     Route::resource("users", UserController::class);
     Route::resource("connected-bots", ConnectedBotController::class);
+    Route::resource("email-sender", SendEmailController::class);
     Route::put('/bots/{bot}', [ConnectedBotController::class, 'update'])->name('bots.update');
     Route::post('/bots/{bot}/add-credits', [ConnectedBotController::class, 'addCredits'])->name('bots.addCredits');
 
@@ -100,11 +100,4 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/test-mail-view', function () {
         return view('mail.bot'); // ✅ Will confirm if Laravel can resolve this path
     });
-
-
-    
-
-
-
-
 });
