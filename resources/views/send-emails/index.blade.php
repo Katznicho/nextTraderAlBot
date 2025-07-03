@@ -1,4 +1,9 @@
 <x-app-layout>
+    <head>
+        <!-- Select2 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    </head>
+
     <div class="max-w-7xl mx-auto py-10 px-6">
         <h2 class="text-3xl font-semibold text-gray-800 mb-8">📧 Send Professional Email</h2>
 
@@ -66,13 +71,13 @@
             <!-- Recipients -->
             <div class="mb-4">
                 <label class="block font-semibold text-gray-700">Recipients</label>
-                <select name="users[]" multiple class="w-full px-4 py-2 border rounded-md">
+                <select id="userSelect" name="users[]" multiple class="w-full select2">
                     <option value="all">Send to All Users</option>
                     @foreach($users as $user)
                         <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
                     @endforeach
                 </select>
-                <p class="text-sm text-gray-500 mt-1">Hold Ctrl (Windows) or Command (Mac) to select multiple users</p>
+                <p class="text-sm text-gray-500 mt-1">Search and select users. Hold Ctrl (Windows) or Command (Mac) to select multiple.</p>
                 @error('users')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
@@ -86,10 +91,21 @@
         </form>
     </div>
 
+    <!-- JS Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         $(document).ready(function() {
-            // Template selection logic
+            // Initialize Select2
+            $('#userSelect').select2({
+                placeholder: "Select recipients",
+                allowClear: true,
+                width: '100%'
+            });
+
+            // Autofill templates
             $('#templateType').on('change', function() {
                 const subjectInput = $('input[name="subject"]');
                 const headingInput = $('input[name="heading"]');
@@ -114,7 +130,6 @@
                 };
 
                 const selected = templates[this.value];
-
                 if (selected) {
                     subjectInput.val(selected.subject);
                     headingInput.val(selected.heading);
@@ -133,20 +148,23 @@
                 const $submitBtn = $('#submitBtn');
                 const $alert = $('#alert');
 
-                // Disable button and show loading state
                 $submitBtn.prop('disabled', true).text('Sending...');
-                $alert.removeClass('bg-green-100 bg-red-100').addClass('hidden').empty();
+                $alert.removeClass('bg-green-100 bg-red-100 text-green-700 text-red-700').addClass('hidden').empty();
 
                 $.ajax({
                     url: $form.attr('action'),
                     method: 'POST',
                     data: $form.serialize(),
                     headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') || '{{ $form.find('input[name="_token"]').val() }}'
+                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
                     },
                     success: function(response) {
-                        $alert.removeClass('hidden').addClass('bg-green-100 text-green-700').text(response.success || 'Email sent successfully!');
+                        $alert
+                            .removeClass('hidden')
+                            .addClass('bg-green-100 text-green-700')
+                            .text(response.success || 'Email sent successfully!');
                         $form[0].reset();
+                        $('#userSelect').val(null).trigger('change'); // Clear select2
                     },
                     error: function(xhr) {
                         $alert.removeClass('hidden').addClass('bg-red-100 text-red-700');
