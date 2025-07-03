@@ -108,11 +108,11 @@
 </script>
 <!--End of Tawk.to Script-->
 
-<div class="w-full bg-[#0b0f1a] text-green-400 text-sm overflow-hidden fixed bottom-0 z-50">
+{{-- <div class="w-full bg-[#0b0f1a] text-green-400 text-sm overflow-hidden fixed bottom-0 z-50">
     <marquee id="tickerMarquee" behavior="scroll" direction="left" scrollamount="4" class="py-1 px-4 font-mono">
         Loading market data...
     </marquee>
-</div>
+</div> --}}
 
 <script>
     function getRandomPrice(base, variance) {

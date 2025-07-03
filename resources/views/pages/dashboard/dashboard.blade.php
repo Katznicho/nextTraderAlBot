@@ -4,7 +4,7 @@
             <!-- Page Title with User Info -->
             <div class="mb-8 flex justify-between items-center bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-sm">
                 <div>
-                    <h2 class="text-3xl font-bold text-[#011478]">Welcome to NextGenTradderAI</h2>
+                    <h2 class="text-3xl font-bold text-[#011478]">Welcome to NextGenTraderAI</h2>
                     <div class="flex items-center mt-2 space-x-4">
                         <p class="text-gray-600 font-medium">Trader: {{ Auth::user()->name }}</p>
                         <span class="text-gray-400">|</span>
