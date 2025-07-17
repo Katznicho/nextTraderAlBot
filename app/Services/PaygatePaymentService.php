@@ -64,13 +64,31 @@ class PaygatePaymentService
         return null;
     }
 
-    $query = 'address=' . $encryptedAddress
-           . '&amount=' . $amount
-           . '&provider=' . $provider
-           . '&email=' . urlencode($email)
-           . '&currency=' . $currency;
+    // $query = 'address=' . $encryptedAddress
+    //        . '&amount=' . $amount
+    //        . '&provider=' . $provider
+    //        . '&email=' . urlencode($email)
+    //        . '&currency=' . $currency;
 
-    return "https://checkout.paygate.to/process-payment.php?$query";
+    // return "https://checkout.paygate.to/process-payment.php?$query";
+
+    //https://selar.com/3215dr4747
+    //https://selar.com/77m1t7nan4
+    //https://selar.com/2733774i77
+    //redirect url
+
+    if($amount >= 100){
+        return "https://selar.com/3215dr4747";
+    }
+    elseif($amount >= 60){
+        return "https://selar.com/77m1t7nan4";
+    }
+    else{
+
+        return "https://selar.com/2733774i77";
+    }
+
+
 }
 
 }

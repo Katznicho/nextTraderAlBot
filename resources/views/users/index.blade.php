@@ -4,6 +4,11 @@
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Users List</h2>
+                <div class="mb-4">
+                    <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">
+                        Total Users: {{ $users->count() }}
+                    </span>
+                </div>
 
                 <table class="w-full table-auto text-left">
                     <thead>
@@ -13,6 +18,7 @@
                             <th class="p-2">Balance</th>
                             <th class="p-2">Profit</th>
                             <th class="p-2">Total Trades</th>
+                            <th class="p-2">Join Date</th>
                             <th class="p-2">Action</th>
                         </tr>
                     </thead>
@@ -24,6 +30,7 @@
                                 <td class="p-2">{{ $user->balance }}</td>
                                 <td class="p-2">{{ $user->profit }}</td>
                                 <td class="p-2">{{ $user->total_trades }}</td>
+                                <td class="p-2">{{ $user->created_at->format('Y-m-d') }}</td>
                                 <td class="p-2 space-x-2">
                                     <button
                                         onclick="openModal({{ $user }})"
