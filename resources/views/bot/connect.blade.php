@@ -35,14 +35,31 @@
 
                 {{-- Warning if fuel is 0 --}}
                 @if ($botConfig->fuel_balance == 0)
-                    <div class="mt-6 p-4 bg-red-100 border border-red-300 rounded">
-                        <p class="text-red-700 font-medium">
-                            ⚠️ Your bot has 0 Bot Credits. Please refill to enable trading actions.
-                        </p>
-                        <a href="{{ route('bot.fuel') }}"
-                            class="inline-block mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
-                            Refill Now
-                        </a>
+                    <div class="mt-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">Deposit to Your Trading Account</h3>
+                        <div class="p-4 bg-red-100 border border-red-300 rounded">
+                            <p class="text-red-700 font-medium">
+                                ⚠️ Your bot has 0 Bot Credits. Please deposit to your bot to start trading.
+                            </p>
+                            @if ($botConfig->current_strategy === 'in_app')
+                                <form action="{{ route('bot.deposit') }}" method="GET" class="mt-2">
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+                                        Deposit to your bot to start trading
+                                    </button>
+                                </form>
+                                <p class="mt-2 text-blue-700 text-sm font-medium">
+                                    This bot uses the in-app strategy. Please deposit to enable trading.
+                                </p>
+                            @else
+                                <form action="{{ route('bot.fuel') }}" method="GET" class="mt-2">
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+                                        Deposit to your bot to start trading
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
                 @endif
 

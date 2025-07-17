@@ -191,6 +191,20 @@
                             </div>
                         </a>
                     </li>
+                    <li
+                        class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['deposit'])) {{ 'from-[#011478]/[0.12] dark:from-[#011478]/[0.24] to-[#011478]/[0.04]' }} @endif">
+                        <a class="block text-gray-500/90 dark:text-gray-400 hover:text-[#d1111b] transition truncate @if (Route::is('bot.deposit')) {{ '!text-[#011478]' }} @endif"
+                            href="{{ route('bot.deposit') }}">
+                            <div class="flex items-center">
+                                <svg class="shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                                <span class="text-sm font-medium ml-3 flex items-center gap-2">
+                                    Deposit
+                                </span>
+                            </div>
+                        </a>
+                    </li>
 
 
                     <!-- Reports -->

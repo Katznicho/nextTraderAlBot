@@ -14,7 +14,9 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\TradeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserSubscriptionController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -91,9 +93,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/fuel', [BotConfigurationController::class, 'fuel'])->name('bot.fuel');
         Route::post('/fuel', [BotConfigurationController::class, 'fuelStore'])->name('bot.fuel.store');
         Route::post('/toggle', [BotConfigurationController::class, 'toggle'])->name('bot.toggle');
+        Route::get('/deposit', [BotConfigurationController::class, 'deposit'])->name('bot.deposit');
+        Route::post('/deposit', [BotConfigurationController::class, 'depositStore'])->name('bot.deposit.store');
     });
     Route::post('/signals/subscribe/{signal}', [SignalController::class, 'subscribe'])->name('signals.subscribe');
     Route::post('/addons/{addon}/activate', [AddOnsController::class, 'activate'])->name('addons.activate');
+
+    Route::post('/user-subscriptions', [UserSubscriptionController::class, 'store'])
+    ->name('user-subscriptions.store');
 
     //Robot
 

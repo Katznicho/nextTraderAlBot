@@ -18,6 +18,7 @@
                             <th class="p-2">Strategy</th>
                             <th class="p-2">Status</th>
                             <th class="p-2">Image</th>
+                            <th class="p-2">User</th>
                             <th class="p-2">Action</th>
                         </tr>
                     </thead>
@@ -34,6 +35,7 @@
                                 <td class="p-2">{{ $bot->current_strategy }}</td>
                                 <td class="p-2 capitalize">{{ $bot->status_message ?? 'N/A' }}</td>
                                 <td class="p-2 max-w-xs truncate text-xs">{{ $bot->image_url }}</td>
+                                <td class="p-2">{{ $bot->user->name }}</td>
                                 <td class="p-2">
                                     <button onclick="openModal({{ $bot }})"
                                         class="bg-blue-600 hover:bg-blue-800 text-white px-4 py-1 rounded">

@@ -14,7 +14,7 @@ class ConnectedBotController extends Controller
     {
         //
         // Fetch all connected bots
-        $bots = BotConfiguration::all();
+        $bots = BotConfiguration::with('user')->get();
         return view('connected-bots.index', compact('bots'));
     }
 

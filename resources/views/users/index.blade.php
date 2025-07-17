@@ -24,29 +24,43 @@
                                 <td class="p-2">{{ $user->balance }}</td>
                                 <td class="p-2">{{ $user->profit }}</td>
                                 <td class="p-2">{{ $user->total_trades }}</td>
-                                <td class="p-2">
+                                <td class="p-2 space-x-2">
                                     <button
                                         onclick="openModal({{ $user }})"
-                                        class="bg-blue-600 hover:bg-blue-800 text-white px-4 py-1 rounded"
+                                        class="bg-blue-600 hover:bg-blue-800 text-white px-3 py-1 rounded inline-flex items-center"
+                                        title="Edit"
                                     >
-                                        Edit
+                                        <!-- Heroicon: Pencil -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m-2 2h2v2H7v-2z" />
+                                        </svg>
                                     </button>
-                                    <td class="p-2 space-x-2">
-                                        <button
-                                            onclick="openModal({{ $user }})"
-                                            class="bg-blue-600 hover:bg-blue-800 text-white px-4 py-1 rounded"
+                                    @if(auth()->user()->id !== $user->id)
+                                        <a href="{{ route('impersonate', $user->id) }}"
+                                           class="bg-yellow-500 hover:bg-yellow-700 text-white px-3 py-1 rounded inline-flex items-center"
+                                           title="Impersonate"
                                         >
-                                            Edit
+                                            <!-- Heroicon: User Switch (use User icon as example) -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                        </a>
+                                    @endif
+                                    <form action="{{ route('user-subscriptions.store') }}" method="POST" class="inline">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                        <input type="hidden" name="subscription_id" value="1">
+                                        <button type="submit"
+                                            class="bg-green-600 hover:bg-green-800 text-white px-3 py-1 rounded inline-flex items-center"
+                                            title="Create User Subscription"
+                                        >
+                                            <!-- Heroicon: Plus -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                            </svg>
                                         </button>
-                                    
-                                        @if(auth()->user()->id !== $user->id)
-                                            <a href="{{ route('impersonate', $user->id) }}"
-                                               class="bg-yellow-500 hover:bg-yellow-700 text-white px-3 py-1 rounded">
-                                                Impersonate
-                                            </a>
-                                        @endif
-                                    </td>
-                                    
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

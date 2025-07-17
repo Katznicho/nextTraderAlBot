@@ -82,6 +82,16 @@ class BotConfigurationController extends Controller
         ]);
     }
 
+    public function deposit(Request $request)
+    {
+        $botConfig = BotConfiguration::where('user_id', auth()->id())
+            ->firstOrFail();
+
+        return view('bot.deposit', [
+            'botConfig' => $botConfig
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -142,6 +152,26 @@ class BotConfigurationController extends Controller
     }
 
     public function fuelStore(Request $request)
+    {
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:50',
+            'payment_type' => 'required|string|in:card,crypto',
+        ]);
+
+        // You can optionally create a FuelPayment or Payment record here if you want to track it before redirecting
+
+        if ($validated['payment_type'] === 'crypto') {
+            return $this->initiateCryptoFuelPayment($validated['amount']);
+        }
+
+        if ($validated['payment_type'] === 'card') {
+            return $this->initiateCardFuelPayment($validated['amount']);
+        }
+
+        return back()->withErrors('Invalid payment method selected.');
+    }
+
+    public function depositStore(Request $request)
     {
         $validated = $request->validate([
             'amount' => 'required|numeric|min:50',
